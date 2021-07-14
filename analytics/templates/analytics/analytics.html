@@ -1,0 +1,352 @@
+{% extends 'analytics/base.html' %}
+{% load static %}
+{% block content %}
+<!-- Dashboard -->
+<div class="dashboard-container">
+    <h4>直近1週間のサマリー</h4>
+    <div class="row summary_margin">
+        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
+            <div class="step-block">
+                <span class="step-digit">
+                    <i class="icmn-cursor2"><!-- --></i>
+                </span>
+                <div class="step-desc">
+                    <span class="step-title">クリック数</span>
+                    <p style="align_right">{{ params.clickCounts }} 件</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">
+            <div class="step-block">
+                <span class="step-digit">
+                    <i class="icmn-stack" aria-hidden="true"><!-- --></i>
+                </span>
+                <div class="step-desc">
+                    <span class="step-title">PV</span>
+                    <p style="align_right">{{ params.accessCount }} 件</p>
+                </div>
+            </div>
+        </div>
+<!--        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">-->
+<!--            <div class="step-block step-danger">-->
+<!--                <span class="step-digit">-->
+<!--                    <i class="icmn-stats-dots">&lt;!&ndash; &ndash;&gt;</i>-->
+<!--                </span>-->
+<!--                <div class="step-desc">-->
+<!--                    <span class="step-title">Bandwidth</span>-->
+<!--                    <p>-->
+<!--                        <span>160.32 GB/S</span>-->
+<!--                        <span>&nbsp;</span>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-xl-3 col-lg-6 col-sm-6 col-xs-12">-->
+<!--            <div class="step-block step-secondary">-->
+<!--                <span class="step-digit">-->
+<!--                    <i class="icmn-stats-growth">&lt;!&ndash; &ndash;&gt;</i>-->
+<!--                </span>-->
+<!--                <div class="step-desc">-->
+<!--                    <span class="step-title">Daily Sales</span>-->
+<!--                    <p>-->
+<!--                        Total: 765-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+    <div class="row">
+        <div class="col-xl-4">
+            <h4>日別アクセス数</h4>
+            <br />
+            <div class="margin-bottom-50">
+                <!-- Bar Chart -->
+                <canvas id="chart-bar" width="400" height="200"></canvas>
+                <!-- End Bar Chart -->
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <h4>ブラウザー分析</h4>
+            <br />
+            <div class="margin-bottom-50">
+                <!-- Doughnut Chart -->
+                <canvas id="chart-doughnut" width="400" height="200"></canvas>
+                <!-- End Doughnut Chart -->
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <h4>デバイス分析</h4>
+            <br />
+            <div class="margin-bottom-50">
+                <!-- Doughnut Chart -->
+                <canvas id="chart-doughnut2" width="400" height="200"></canvas>
+                <!-- End Doughnut Chart -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="panel panel-with-borders m-b-0">
+                <div class="panel-body">
+                    <div class="nav-tabs-horizontal margin-bottom-20">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#h1" role="tab">沿革編</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#h2" role="tab">DNA編</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#h3" role="tab">資料編</a>
+                            </li>
+<!--                            <li class="nav-item">-->
+<!--                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#h4" role="tab">Waiting for Registration</a>-->
+<!--                            </li>-->
+                        </ul>
+                    </div>
+                    <table class="table table-hover nowrap margin-bottom-0" id="example1" width="100%">
+                        <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>タイトル</th>
+                            <th>クリック数</th>
+                            <th>熟読分析</th>
+                            <th>エリア閲覧率</th>
+                            <th>Click Check</th>
+                            <th>Data Delete</th>
+                        </tr>
+                        </thead>
+
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--{{ params.list_dic }}-->
+<script>
+    var list_dic = {{params.list_dic|safe}};
+<!--    console.log(list_dic['Web社史 DEMO'][0]);-->
+</script>
+<script>
+<!--    ///////////////////////////////////////////////////////////-->
+<!--    // DATATABLES-->
+<!--    $('#example1').DataTable({-->
+<!--        responsive: true,-->
+<!--        "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]]-->
+<!--    });-->
+<!--    ///////////////////////////////////////////////////////////-->
+
+
+
+
+
+    var bar_chart_data = JSON.parse('{{ params.date_array|safe }}');
+    var browser_array = JSON.parse('{{ params.browser_array|safe }}');
+    var device_array = JSON.parse('{{ params.device_array|safe }}');
+
+    var date_list = Object.keys(bar_chart_data).reverse();
+    var access_count_list = Object.values(bar_chart_data).reverse();
+
+    var browser_list = Object.keys(browser_array).reverse();
+    var browser_count_list = Object.values(browser_array).reverse();
+
+    var device_list = Object.keys(device_array).reverse();
+    var device_count_list = Object.values(device_array).reverse();
+
+    console.log(device_array);
+
+
+    $(function () {
+
+        // BAR CHART
+        var barCtx = document.getElementById('chart-bar').getContext('2d');
+
+        var dataBar = {
+            labels: date_list,
+            datasets: [
+                {
+                    label: "アクセス数",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    data: access_count_list
+                }
+            ]
+        };
+
+        new Chart(barCtx, {
+            type: "bar",
+            data: dataBar,
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
+
+
+        // DOUGHTNUT CHART
+        var doughnutCtx = document.getElementById('chart-doughnut').getContext('2d');
+
+        var chartDoughnut = {
+            labels: browser_list,
+            datasets: [
+                {
+                    data: browser_count_list,
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.4)",
+                        "rgba(54, 162, 235, 0.4)",
+                        "rgba(255, 206, 86, 0.4)"
+
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }]
+        };
+
+        new Chart(doughnutCtx, {
+            type: 'doughnut',
+            data: chartDoughnut
+        });
+
+
+
+        // DOUGHTNUT CHART2
+        var doughnutCtx = document.getElementById('chart-doughnut2').getContext('2d');
+
+        var chartDoughnut = {
+            labels: device_list,
+            datasets: [
+                {
+                    data: device_count_list,
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.4)",
+                        "rgba(54, 162, 235, 0.4)",
+                        "rgba(255, 206, 86, 0.4)"
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56"
+                    ]
+                }]
+        };
+
+        new Chart(doughnutCtx, {
+            type: 'doughnut',
+            data: chartDoughnut
+        });
+
+
+
+    });
+</script>
+<script>
+var dict_len = Object.keys(list_dic).length;
+const tableBody = document.getElementById('tableBody');
+console.log('list_dic : ', list_dic);
+
+buf = '';
+cnt = 1
+for (var key in list_dic) {
+
+
+    // 여기서 URL을 지정
+    if (list_dic[key][1] == '') {
+        var id = "index";
+    } else {
+        var id = list_dic[key][1].slice( -36 ).toString()
+    }
+    var carefully_urls = "{% url 'analytics:carefully_read' 00000 %}".replace(00000,id);
+    var clickCount_urls = "{% url 'analytics:allclickmap' 00000 %}".replace(00000,id);
+    var masArea_urls = "{% url 'analytics:masu_heatmap' 00000 %}".replace(00000,id);
+    console.log('masArea_urls : ', masArea_urls);
+
+    buf += '<tr>';
+
+    buf += '<td>';
+    buf += cnt;
+    buf += '</td>';
+
+    buf += '<td>';
+    buf += key;
+    buf += '</td>';
+
+    // click count표시
+    buf += '<td>';
+    buf += list_dic[key][0];
+    buf += '</td>';
+
+//    熟読分析
+    buf += '<td>';
+    buf += "<a href='";
+    buf += carefully_urls;
+    buf += "'>";
+    buf += "<i class='icmn-gradient' aria-hidden='true'></i>";
+    buf += '</a>';
+    buf += '</td>';
+
+//    エリア閲覧率
+    buf += '<td>';
+    buf += "<a href='";
+    buf += masArea_urls;
+    buf += "'>";
+    buf += "<i class='icmn-grid6' aria-hidden='true'></i>";
+    buf += '</a>';
+    buf += '</td>';
+
+
+//    クリックエリア
+    buf += '<td>';
+    buf += "<a href='";
+    buf += clickCount_urls;
+    buf += "'>";
+    buf += "<i class='icmn-grid5' aria-hidden='true'></i>";
+    buf += '</a>';
+    buf += '</td>';
+
+
+//    削除ボタン
+    buf += '<td>';
+    buf += "<a href='analytics/delete";
+    buf += "'>";
+    buf += "<i class='icmn-eraser' aria-hidden='true'></i>";
+    buf += '</a>';
+    buf += '</td>';
+
+    buf += '</tr>';
+    tableBody.innerHTML = buf;
+    cnt += 1
+}
+</script>
+<!--<script src="{% static 'js/analytics_custom.js' %}"></script>-->
+<!-- End Dashboard -->
+{% endblock %}

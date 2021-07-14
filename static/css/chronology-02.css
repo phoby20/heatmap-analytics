@@ -1,0 +1,213 @@
+
+
+.sociales {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+#timeline {
+	box-sizing: border-box;
+	width: 93%;
+	overflow: hidden;
+	position: relative;
+	background: url('../img/timelinr-dot.gif') left 45px repeat-x;
+	margin-top: 10px;
+	margin-right: 0;
+	margin-bottom: 50px;
+	margin-left: 0;
+}
+#dates {
+	/* width:660px; */
+	height: 60px;
+	overflow: hidden;
+}
+#dates li {
+	list-style: none;
+	float: left;
+	width: 80px;
+	height: 50px;
+	font-size: 16px;
+	text-align: center;
+	background: url('../img/timelinr-biggerdot.png') center bottom no-repeat;
+}
+#dates a {
+	line-height: 30px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+#dates .selected {
+	font-size: 26px;
+}
+
+#issues {
+	overflow: hidden;
+	background-color: #FFFFFF;
+}
+#issues li {
+	width: 90vw;
+	list-style: none;
+	float: left;
+}
+#issues li.selected img {
+	-webkit-transform: scale(1.1,1.1);
+	-moz-transform: scale(1.1,1.1);
+	-o-transform: scale(1.1,1.1);
+	-ms-transform: scale(1.1,1.1);
+	transform: scale(1.1,1.1);
+}
+#issues li img {
+	float: left;
+	background: transparent;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF)"; /* IE 8 */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#00FFFFFF,endColorstr=#00FFFFFF);/* IE 6 & 7 */
+	zoom: 1;
+
+	-webkit-transition: all 2s ease-in-out;
+	-moz-transition: all 2s ease-in-out;
+	-o-transition: all 2s ease-in-out;
+	-ms-transition: all 2s ease-in-out;
+	transition: all 2s ease-in-out;
+
+	-webkit-transform: scale(0.7,0.7);
+	-moz-transform: scale(0.7,0.7);
+	-o-transform: scale(0.7,0.7);
+	-ms-transform: scale(0.7,0.7);
+	transform: scale(0.7,0.7);
+	margin-top: 20px;
+	margin-right: 30px;
+	margin-bottom: 10px;
+	margin-left: 50px;
+}
+#issues li h1 {
+	color: #336699;
+	font-size: 67px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCCCCC;
+	margin-top: 20px;
+	margin-right: 0;
+	margin-bottom: 20px;
+	margin-left: 0;
+	padding-bottom: 10px;
+}
+#issues li p {
+	font-size: 15px;
+	font-weight: normal;
+	line-height: 1.6em;
+	margin-bottom: 10px;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	border-bottom-width: 1px;
+	border-bottom-style: dotted;
+	border-bottom-color: #CCCCCC;
+}
+
+#grad_left,
+#grad_right {
+	width: 50px;
+	height: 350px;
+	position: absolute;
+	top: 0;
+}
+#grad_left {
+	left: 0;
+	background: url('../images/grad_left.png') repeat-y;
+}
+#grad_right {
+	right: 0;
+	background: url('../images/grad_right.png') repeat-y;
+}
+
+#next,
+#prev {
+	position: absolute;
+	top: 0;
+	font-size: 70px;
+	top: 270px;
+	width: 22px;
+	height: 38px;
+	background-position: 0 -38px;
+	background-repeat: no-repeat;
+	text-indent: -9999px;
+	overflow: hidden;
+}
+#next {
+	right: 0;
+	background-image: url('../img/timelinr-next.png');
+}
+#prev {
+	left: 0;
+	background-image: url('../img/timelinr-prev.png');
+}
+#next.disabled,
+#prev.disabled {
+	opacity: 0.2;
+}
+.rightbox2 {
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 15px;
+}
+.rightbox3 {
+	float: right;
+}
+.mini-block {
+	display: inline-block;
+	margin-bottom: 4px;
+	padding: 0 5px;
+	background-color: #aaa;
+	color: #fff;
+}
+.syakai {
+	font-size: 11pt;
+	line-height: 2em;
+	font-weight: bold;
+	color: #003366;
+	margin-bottom: 10px;
+}
+.right video {
+	margin-top: 25px;
+}
+.caption {
+	font-size: 10pt;
+	line-height: 2em;
+	margin-top: 25px;
+}
+
+
+@media screen and (min-width: 1024px) {
+  /*　画面サイズが1024px以上　*/
+
+	#issues li p{
+		font-size: 16px;
+	}
+	#timeline {
+	  width: 100%;
+	  margin: 0 auto;
+	  padding: 10px 0;
+	}
+	#dates {
+	  width:660px;
+	}
+	#issues li {
+		width: 660px;
+		width: 70vw;
+	}
+	.rightbox2 {
+	  width: 80%;
+	}
+	.rightbox3 {
+	  width: 670px;
+	}
+	#next,
+	#prev {
+		background-position: 0 -38px;
+	}
+	#next:hover,
+	#prev:hover {
+		background-position: 0 0;
+	}
+
+}

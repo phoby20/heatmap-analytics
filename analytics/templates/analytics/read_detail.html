@@ -1,0 +1,213 @@
+{% load static %}
+<html>
+<head>
+<!-- IE8+に対して利用できる最も互換性の高い最新のエンジンを使用するよう指示 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- ページのタイトル -->
+<title>Web社史 DEMO</title>
+<!-- 文字のエンコーディング -->
+<meta charset="utf-8">
+<!-- content属性にページの紹介文を記述 -->
+<meta name="description" content="">
+<!--ページの著者情報 -->
+<meta name="author" content="">
+<!-- Googleの検索結果に表示しない、その先のリンクをたどらせない -->
+<meta name="robots" content="noindex,nofollow">
+<!-- モバイル端末への対応、ページをビューポートの幅に合わせてレンダリング（Android, iOS6以降）
+     ズームを許可しない設定「user-scalable=no」は加えない -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- CSS -->
+<link rel="stylesheet" href="{% static 'css/vendor/drawer-custom.css' %}">
+<link rel="stylesheet" href="{% static 'css/vendor/materialize-custom.css' %}">
+<link rel="stylesheet" href="{% static 'font/iconfont/material-icons.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css?07251030' %}">
+<link rel="stylesheet" href="{% static 'css/style-s.css?07251030' %}">
+<link rel="stylesheet" href="{% static 'css/style-m.css?07251030' %}">
+<link rel="stylesheet" href="{% static 'css/style-l.css?07251030' %}">
+
+<!-- IE8以下用に2つのスクリプトを記述
+     html5shiv.js: IE8以下にHTML5の要素を認識するようにさせる
+     respond.js: IE8以下にMedia Queriesの代替え機能を提供 -->
+<!--[if lt IE 9]>
+<script src="{% static 'js/vendor/html5shiv.min.js' %}"></script>
+<script src="{% static 'js/vendor/respond.min.js' %}"></script>
+<![endif]-->
+
+<!-- ファビコン -->
+<link rel="shortcut icon" href="img/favicon.ico">
+
+<!-- iOS/Android用のアイコン指定 -->
+<!--
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" sizes="196x196" href="">
+<link rel="apple-touch-icon" sizes="152x152" href="">
+-->
+
+<!-- JS（ページのレンダリングに関するもの） -->
+<script type="text/javascript" src="{% static 'js/vendor/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/searchbox.js' %}"></script>
+</head>
+<!-- コンテンツを記述 -->
+
+<body id="body">
+
+  <!-- ヘッダー -->
+  <header class="header red-border">
+    <div class="sp-header-bar">
+      <div class="pc-inner-fix-w">
+        <!-- ロゴ -->
+        <h1 class="logo">
+          <a href="index.html">
+            <img src="{% static 'img/logo.png' %}" alt="出版文化社">
+          </a>
+        </h1>
+      </div>
+    </div>
+
+    <!-- ボタン（SP） -->
+    <div class="sp-btn-block">
+        <div class="btn-serch"></div>
+    </div>
+
+    <!-- 検索ボックス -->
+    <div class="serch-wrap">
+    </div>
+
+  </header>
+
+  <div class="main-visual">
+    <div class="pc-inner-fix-w">
+      <div class="content">
+        <section class="main-secton">
+          <div class="main-title-block">
+            <h2 class="main-title minchou">出版文化社<span class="big">35</span>年史</h2>
+            <p class="main-sub-title">ビジネスのDNAを次世代に伝える</p>
+            <p class="year">1986-2021</p>
+          </div>
+          <div class="main-body">
+            <ul class="panel-list">
+              <li>
+                <h3 class="panel-list-title">沿革編</h3>
+              </li>
+              {% for object in params.object %}
+              <li>
+                <a href="{% url 'main_story:main_story' object.id %}" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title minchou">第{{ object.chapter_number }}章</h4>
+                  <p class="panel-sub-title">1986-2021</p>
+                  <p class="panel-p">{{ object.chapter }}</p>
+                  </div>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <ul class="panel-list">
+              <li>
+                <h3 class="panel-list-title">資料</h3>
+              </li>
+              <li>
+                <a href="data/data-01.html" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title minchou">経営数値</h4>
+                  <p class="panel-sub-title">1986-2021</p>
+                  <p class="panel-p">グラフのサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="data/chronology-01.html" target="_blank" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title minchou">年　表</h4>
+                  <p class="panel-sub-title">1986-2021</p>
+                  <p class="panel-p">年表のサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="pdf/company.pdf" target="_blank" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title minchou">会社概要</h4>
+                  <p class="panel-sub-title">1986-2021</p>
+                  <p class="panel-p">PDFのサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <ul class="panel-list">
+              <li>
+                <h3 class="panel-list-title">特別企画</h3>
+              </li>
+              <li>
+                <a href="plan/interview-01.html" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title panel-title-medium minchou">インタビュー企画</h4>
+                  <p class="panel-p">インタビューのサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="plan/photo-gallery-01.html" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title panel-title-medium minchou">写真集</h4>
+                  <p class="panel-p">写真集のサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="plan/movie-gallery-01.html" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title panel-title-medium minchou">動画ギャラリー</h4>
+                  <p class="panel-p">動画ギャラリーのサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="plan/historical-movie-01.html" class="panel-link" onclick="clickEvent(this)">
+                  <div class="panel-block panel-block-medium">
+                  <h4 class="panel-title panel-title-medium minchou">ヒストリカルムービー</h4>
+                  <p class="panel-p">ヒストリカルムービーのサンプルです。</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- フッター -->
+  <a href="#" class="page-top" onclick="clickEvent(this)"><i class="small material-icons">arrow_upward</i></a>
+  <footer class="footer index-footer">
+    <div class="pc-inner">
+      <p class="copyright">&copy; 2019 Shuppan Bunka Sha.</p>
+    </div>
+  </footer>
+    <!-- フッタ 終了 -->
+
+
+
+
+    <div class="body">
+<!--        <div class="ouputContainer">-->
+<!--            <div class="incontainer">-->
+<!--                <div class="sticky" id="output_clientX"></div>-->
+<!--                <div class="sticky" id="output_clientY" style="top: 20px;"></div>-->
+<!--                <div class="sticky" id="output_screen" style="top: 40px;"></div>-->
+<!--                <div class="sticky" id="output_scrollx"></div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+        <canvas id="d"></canvas>
+    </div>
+
+   <script>
+        const chapter_data = JSON.parse('{{ params.items|safe }}');
+   </script>
+   <script src="{% static 'js/main.js' %}"></script>
+   <script src="{% static 'js/read_heatmap.js' %}"></script>
+
+</body>
+</html>

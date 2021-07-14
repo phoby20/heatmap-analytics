@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+/*----------------------------------------------------------------
+ *　layout.css
+----------------------------------------------------------------*/
+
+#gallery_box{
+	width:600px;
+	overflow:hidden;
+}
+
+#gallery{
+	width:1800px;	
+}
+
+#gallery li{
+	float:left;
+	width:600px;
+	line-height:0px;
+	position: relative;
+	left:0
+}

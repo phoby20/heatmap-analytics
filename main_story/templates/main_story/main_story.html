@@ -1,0 +1,120 @@
+
+
+
+{% extends 'main_story/base.html' %}
+{% load static %}
+{% block head %}
+    <title>第{{ params.get_product.chapter_number }}章 {{ params.get_product.title }}</title>
+{% endblock %}
+
+{% block content %}
+<div class="bg">
+
+        <div class="title-wrapper pc-inner">
+<!--          <div class="page-nav-block">-->
+<!--            <p class="chapter-title">第１章 ビジネスのDNAを次世代に伝える Exciting Publisher</p>-->
+
+<!--            <div class="page-nav-wrap">-->
+<!--              <ul class="page-nav">-->
+<!--                <li class="off">最初へ</li>-->
+<!--                <li class="off">前へ</li>-->
+<!--                <li class="on">3/9</li>-->
+<!--                <li><a href="javascript:void(0);">次へ</a></li>-->
+<!--                <li><a href="javascript:void(0);">最後へ</a></li>-->
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="title-block">
+            <p class="page-title-sub">{{ params.get_product.chapter }}</p>
+            <h2 class="page-title">{{ params.get_product.part }}</h2>
+          </div>
+
+          <!-- パンくず -->
+          <nav class="breadcrumb-block">
+            <a href="index.html" class="breadcrumb"><i class="material-icons">home</i></a>
+            <a class="breadcrumb">沿革編</a>
+            <a class="breadcrumb">第{{ params.get_product.chapter_number }}章</a>
+            <a class="breadcrumb">{{ params.get_product.part }}</a>
+          </nav>
+
+        </div>
+
+        <div class="wrapper pc-inner">
+
+          <aside class="side">
+            <nav class="lnav">
+              <p class="category first-category">沿革編<span class="sub-text"></span></p>
+              <ul class="lnav-list" id="lnav-list">
+<!--                  <li class="item">-->
+<!--                    <a class="in unlink">第１章 出版文化社の誕生</a>-->
+<!--                    <ul class="inner-list">-->
+<!--                      <li class="item"><a class="in link selected" href="javascript:void(0);">1. マンションの一室からの船出</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">2. 経営理念</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">3. 社長メッセージ</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">4. 事業紹介：社史・記念誌</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">5. 事業紹介：デジタル社史</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">6. 事業紹介：アーカイブサポート</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">7. 事業紹介：出版企画</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">8. 会社概要</a></li>-->
+<!--                      <li class="item"><a class="in link" href="javascript:void(0);">9. 沿革</a></li>-->
+<!--                    </ul>-->
+<!--                  </li>-->
+<!--                  <li class="item">-->
+<!--                    <a class="in link" >第２章 </a>-->
+<!--                  </li>-->
+<!--                  <li class="item">-->
+<!--                    <a class="in link" >第３章 </a>-->
+<!--                  </li>-->
+<!--                  <li class="item">-->
+<!--                    <a class="in link" >第４章 </a>-->
+<!--                  </li>-->
+<!--                  <li class="item">-->
+<!--                    <a class="in link" >第５章 </a>-->
+<!--                  </li>-->
+              </ul>
+            </nav>
+          </aside>
+          <div class="content">
+
+            <section class="page-section">
+
+              <section class="section-type1">
+                <h3 class="h">{{ params.get_product.title }}</h3>
+                <p class="p">{{ params.get_product.context1 | linebreaksbr }}</p>
+                  <div class="product_image">
+                      {% for image in params.get_product.images.all %}
+                      <img src="{{ image.image.url }}" alt="" width="80%">
+                      <small>{{ image.title }}</small>
+                      {% endfor %}
+                  </div>
+
+              </section>
+
+
+
+<!--              <div class="bottom-page-nav-block">-->
+<!--                <div class="page-nav-wrap">-->
+<!--                  <ul class="page-nav">-->
+<!--                    <li class="off">最初へ</li>-->
+<!--                    <li class="off">前へ</li>-->
+<!--                    <li class="on">3/9</li>-->
+<!--                    <li><a href="javascript:void(0);">次へ</a></li>-->
+<!--                    <li><a href="javascript:void(0);">最後へ</a></li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+<!--              </div>-->
+
+            </section>
+         </div>
+         <!-- /.content -->
+        </div>
+        <!-- /.wrapper -->
+      </div>
+      <!-- /.bg -->
+    <script>
+      const list_data = JSON.parse('{{params.json_queryset|safe}}');
+      const json_object = {{params.json_object|safe}};
+    </script>
+    <script src="{% static 'js/main_story.js' %}"></script>
+
+{% endblock %}

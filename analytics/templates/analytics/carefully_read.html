@@ -1,0 +1,21 @@
+{% extends 'analytics/base.html' %}
+{% load static %}
+{% block content %}
+
+<div style="width: 100%;">
+
+    <div class="body" id="imgNgragh">
+        <img id="carefully_image" src="" alt="" width="100%">
+        <canvas id="d"></canvas>
+    </div>
+    <script>
+        const chapter_data = JSON.parse('{{ params.items|safe }}');
+        const pk = '{{ params.pk }}'
+
+        var elem = document.getElementById("carefully_image");
+        var src = "{% static 'image/carefully_read/read_detail_' %}"
+        elem.src = src + pk + '.png'
+    </script>
+    <script src="{% static 'js/read_heatmap.js' %}"></script>
+</div>
+{% endblock %}

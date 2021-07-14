@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.circles {
+    z-index: 100;
+}
+.circle {
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	background-color: red;
+	z-index: 100;
+}
+
+
+.ouputContainer {
+    position: absolute;
+    top: 30px;
+    z-index: 100;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+.sticky {
+    position: sticky;
+    top: 10px;
+}
+.incontainer {
+    margin-right: 20px;
+    width: 300px;
+}
+
+

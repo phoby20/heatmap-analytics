@@ -1,0 +1,10 @@
+.product_image {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.product_image img,
+.product_image small {
+    margin: 0 auto;
+}

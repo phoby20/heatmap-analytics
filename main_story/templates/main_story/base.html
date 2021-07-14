@@ -1,0 +1,172 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- CSS -->
+<!--    <link rel="stylesheet" href="{% static 'css/vendor/drawer-custom.css' %}">-->
+    <link rel="stylesheet" href="{% static 'css/vendor/materialize-custom.css' %}">
+    <link rel="stylesheet" href="{% static 'font/iconfont/material-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style-s.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style-m.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style-l.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_custom.css' %}">
+
+
+    <!-- IE8以下用に2つのスクリプトを記述
+         html5shiv.js: IE8以下にHTML5の要素を認識するようにさせる
+         respond.js: IE8以下にMedia Queriesの代替え機能を提供 -->
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/vendor/html5shiv.min.js' %}"></script>
+    <script src="{% static 'js/vendor/respond.min.js' %}"></script>
+    <![endif]-->
+
+
+    <!-- iOS/Android用のアイコン指定 -->
+    <!--
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="196x196" href="">
+    <link rel="apple-touch-icon" sizes="152x152" href="">
+    -->
+
+    <!-- JS（ページのレンダリングに関するもの） -->
+    <script type="text/javascript" src="{% static 'js/vendor/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/searchbox.js' %}"></script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body id="body">
+    <!-- ヘッダー -->
+      <header class="header">
+        <div class="sp-header-bar">
+          <div class="pc-inner">
+            <!-- ロゴ -->
+            <h1 class="logo">
+              <a href="{% url 'index:index' %}">
+                <img src="{% static 'img/logo.png' %}" alt="出版文化社">
+              </a>
+            </h1>
+          </div>
+        </div>
+
+        <!-- ボタン（SP） -->
+        <div class="sp-btn-block">
+            <div class="btn-serch"></div>
+            <div class="btn-global"></div>
+        </div>
+
+        <!-- 検索ボックス -->
+        <div class="serch-wrap">
+        </div>
+
+        <!-- グローバルナビ -->
+        <div class="gnav-wrap">
+            <nav class="gnav">
+                <ul class="gnav-list pc-inner">
+                    <li class="item">
+                        <a class="in link has-sub-item" href="javascript:void(0);">沿革編<br class="is-tablet"><span class="sub-text">History</span></a>
+                        <div class="in sub-item toggle-list-button"><i class="material-icons">keyboard_arrow_down</i></div>
+                        <ul class="inner-list toggled-list">
+                            {% for object in params.object %}
+                            <li class="item"><a class="in link" href="{% url 'main_story:main_story' object.id %}">第{{ object.chapter_number }}章 {{ object.chapter }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <a class="in link has-sub-item" href="javascript:void(0);">資料<br class="is-tablet"><span class="sub-text">Data</span></a>
+                        <div class="in sub-item  toggle-list-button"><i class="material-icons">keyboard_arrow_down</i></div>
+                        <ul class="inner-list toggled-list">
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">経営数値</a></li>
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">年表1</a></li>
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">年表2</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <a class="in link has-sub-item" href="javascript:void(0);">インタビュー<br class="is-tablet"><span class="sub-text">Interview</span></a>
+                        <div class="in sub-item  toggle-list-button"><i class="material-icons">keyboard_arrow_down</i></div>
+                        <ul class="inner-list toggled-list">
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">インタビュー（文章）</a></li>
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">インタビュー（動画）</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <a class="in link has-sub-item" href="javascript:void(0);">ギャラリー<br class="is-tablet"><span class="sub-text">Gallery</span></a>
+                        <div class="in sub-item  toggle-list-button"><i class="material-icons">keyboard_arrow_down</i></div>
+                        <ul class="inner-list toggled-list">
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">写真集</a></li>
+                            <li class="item"><a class="in link" href="' + prefix + 'javascript:void(0);">動画ギャラリー</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <a class="in link" href="' + prefix + 'javascript:void(0);">ムービー<br class="is-tablet"><span class="sub-text">Movie</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+      </header>
+
+        {% block content %}
+        {% endblock %}
+
+
+
+      <!-- フッター -->
+      <a href="#" class="page-top" ><i class="small material-icons">arrow_upward</i></a>
+      <footer class="footer index-footer">
+        <div class="pc-inner">
+          <p class="copyright">&copy; <script type="text/javascript">document.write(new Date().getFullYear());</script> Shuppan Bunka Sha.</p>
+        </div>
+      </footer>
+
+    <!-- JS -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/ajax.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        body.addEventListener('mousemove', function(event) {
+            heatmap_json = JSON.stringify(data_array);
+            // console.log('heatmap_json : ', heatmap_json);
+            data_array = [];
+            $.ajax({
+                type: "POST",
+                url: "{% url 'index:post_input' %}",
+                data: {'array': heatmap_json,  'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: "json",
+                success: function(response){
+                console.log('通信成功1', response.message);
+                },
+                error: function(request, status, error){
+                console.log("通信エラー1.",request, status, error)
+                },
+            })
+        });
+
+
+        body.addEventListener('click', function(event) {
+       heatmap_json = JSON.stringify(data_array);
+       data_array = [];
+        $.ajax({
+              type: "POST",
+              url: "{% url 'index:post_input' %}",
+              data: {'obj': obj, 'array': heatmap_json,  'csrfmiddlewaretoken': '{{ csrf_token }}'},
+              dataType: "json",
+              success: function(response){
+                // alert(response.message);
+                console.log('通信成功2');
+              },
+              error: function(request, status, error){
+                console.log("通信エラー2.",request, status, error)
+              },
+            })
+        });
+
+
+   </script>
+
+</body>
+</html>

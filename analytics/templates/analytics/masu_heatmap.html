@@ -1,0 +1,110 @@
+{% extends 'analytics/base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<script src="{% static 'js/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+<h2>エリア閲覧率</h2>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+<!--                    <p>検索期間</p>-->
+        <div class="margin-bottom-50">
+            <form action="" method="post">
+                {% csrf_token %}
+                <input id="date_from" type="text" name="date-from" class="form-control datepicker-only-init width-150 display-inline-block margin-inline" placeholder="From" />
+                <span class="margin-right-10">～</span>
+                <input type="text" name="date-to" class="form-control datepicker-only-init width-150 display-inline-block margin-inline" placeholder="To" />
+                <button type="submit" class="form-control btn btn_submit width-100 margin-inline" style="margin-top: 6px;">検索</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <canvas id="masu"></canvas>
+    <img id="masu_image" src="" alt="" width="100%">
+</div>
+
+<script>
+    const chapter_data = JSON.parse('{{ params.items|safe }}');
+    const pk = '{{ params.pk }}'
+    console.log(pk)
+
+    var elem = document.getElementById("masu_image");
+    var src = elem.getAttribute('src');
+    var src = "{% static 'image/masu_heatmap/masu_heatmap_' %}"
+    elem.src = src + pk + '.png'
+</script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/masu_heatmap.js' %}"></script>
+<script>
+    $(function(){
+
+        $('.datepicker-init').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+
+        $('.datepicker-only-init').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'LL'
+        });
+
+        $('.timepicker-init').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'LT'
+        });
+
+        $('.datepicker-inline-init').datetimepicker({
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            inline: true,
+            sideBySide: false
+        });
+
+        $('.timepicker-inline-init').datetimepicker({
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'LT',
+            inline: true,
+            sideBySide: false
+        });
+
+    })
+</script>
+{% endblock %}

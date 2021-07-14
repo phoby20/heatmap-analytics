@@ -1,0 +1,180 @@
+{% extends 'analytics/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<script src="{% static 'js/eonasdan-bootstrap-datetimepicker/bootstrap-datetimepicker.min.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+<!-- Dashboard -->
+<div class="dashboard-container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h4>日別アクセス数</h4>
+            <br />
+            <div class="row">
+                <div class="col-lg-6">
+<!--                    <p>検索期間</p>-->
+                    <div class="margin-bottom-50">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <input id="date_from" type="text" name="date-from" class="form-control datepicker-only-init width-150 display-inline-block margin-inline" placeholder="From" />
+                            <span class="margin-right-10">～</span>
+                            <input type="text" name="date-to" class="form-control datepicker-only-init width-150 display-inline-block margin-inline" placeholder="To" />
+                            <button type="submit" class="form-control btn btn_submit width-100 margin-inline" style="margin-top: 6px;">検索</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="margin-bottom-50">
+                <!-- Bar Chart -->
+                <canvas id="chart-bar" width="400" height="100"></canvas>
+                <!-- End Bar Chart -->
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+<!--    ///////////////////////////////////////////////////////////-->
+<!--    // DATATABLES-->
+<!--    $('#example1').DataTable({-->
+<!--        responsive: true,-->
+<!--        "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]]-->
+<!--    });-->
+<!--    ///////////////////////////////////////////////////////////-->
+
+
+
+
+
+    var bar_chart_data = JSON.parse('{{ params.date_array|safe }}');
+
+    var date_list = Object.keys(bar_chart_data).reverse();
+    var access_count_list = Object.values(bar_chart_data).reverse();
+
+    $(function () {
+
+        // BAR CHART
+        var barCtx = document.getElementById('chart-bar').getContext('2d');
+
+        var dataBar = {
+            labels: date_list,
+            datasets: [
+                {
+                    label: "アクセス数",
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    data: access_count_list
+                }
+            ]
+        };
+
+        new Chart(barCtx, {
+            type: "bar",
+            data: dataBar,
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
+
+
+
+    });
+</script>
+<script>
+    $(function(){
+
+        $('.datepicker-init').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+
+        $('.datepicker-only-init').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'LL'
+        });
+
+        $('.timepicker-init').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'LT'
+        });
+
+        $('.datepicker-inline-init').datetimepicker({
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            inline: true,
+            sideBySide: false
+        });
+
+        $('.timepicker-inline-init').datetimepicker({
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'LT',
+            inline: true,
+            sideBySide: false
+        });
+
+    })
+</script>
+<!--<script src="{% static 'js/analytics_custom.js' %}"></script>-->
+<!-- End Dashboard -->
+{% endblock %}

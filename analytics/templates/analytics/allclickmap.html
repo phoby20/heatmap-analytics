@@ -1,0 +1,32 @@
+{% extends 'analytics/base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<h2>クリックチェック</h2>
+
+
+<div id="inDataDrow">
+    <canvas id='canvas'></canvas>
+    <img id="click_image" alt="" width="100%" height="">
+</div>
+<script>
+    const chapter_data = JSON.parse('{{ params.items|safe }}');
+</script>
+
+<script>
+    const pk = '{{ params.pk }}'
+    console.log(pk)
+
+    var elem = document.getElementById("click_image");
+
+    var src = "{% static 'image/allclickmap/click_detail_' %}"
+    elem.src = src + pk + '.png'
+</script>
+<script src="{% static 'js/circle_view.js' %}"></script>
+
+{% endblock %}
